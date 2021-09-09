@@ -13,10 +13,10 @@ public class GameOfLife {
         System.out.println("Original Generation");
 
         visualizer();
-        IntStream.range(0,20).forEach(x->{
-                nextGeneration();
-                System.out.println("Generation: " + (x + 1));
-                visualizer();
+        IntStream.range(0, 20).forEach(x -> {
+            nextGeneration();
+            System.out.println("Generation: " + (x + 1));
+            visualizer();
         });
     }
 
@@ -45,25 +45,19 @@ public class GameOfLife {
         grid = randomGrid;
     }
 
-    private static boolean isAliveInNextGen(int xLoc, int yLoc){
+    private static boolean isAliveInNextGen(int xLoc, int yLoc) {
         int aliveNeighborCount = 0;
-        for (int i = xLoc-1; i <xLoc+2 ; i++) {
-            for (int j = yLoc-1;j < yLoc+2; j++) {
+        for (int i = xLoc - 1; i < xLoc + 2; i++) {
+            for (int j = yLoc - 1; j < yLoc + 2; j++) {
                 if (isValidPoint(i, j) && grid[i][j] == 1 && !(i == xLoc && j == yLoc))
                     aliveNeighborCount++;
             }
         }
 
         if (grid[xLoc][yLoc] == 0) {
-            if (aliveNeighborCount == 3) {
-                return true;
-            } else
-                return false;
+            return aliveNeighborCount == 3;
         }
-        if (aliveNeighborCount < 2 || aliveNeighborCount > 3)
-            return false;
-        else
-            return true;
+        return aliveNeighborCount >= 2 && aliveNeighborCount <= 3;
     }
 
     private static boolean isValidPoint(int xLoc, int yLoc) {
